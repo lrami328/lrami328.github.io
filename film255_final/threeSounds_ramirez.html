@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fullscreen Video with Audio Buttons</title>
+  <link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <video id="background-video" autoplay loop muted>
+    <source src="video/3sounds_video.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <div class="buttons">
+    <button class="audio-button" onclick="playAudio('audio1')">Voice</button>
+    <button class="audio-button" onclick="playAudio('audio2')">Music</button>
+    <button class="audio-button" onclick="playAudio('audio3')">Ambience</button>
+  </div>
+
+  <audio id="audio1" src="audio/3sounds_1voiceover.mp3"></audio>
+  <audio id="audio2" src="audio/3sounds_2music.mp3"></audio>
+  <audio id="audio3" src="audio/3sounds_3ambience.mp3"></audio>
+
+  <script>
+    const video = document.getElementById('background-video');
+    let videoStarted = false;
+    let currentAudio = null;
+
+    function playAudio(id) {
+      if (!videoStarted) {
+        video.play();
+        videoStarted = true;
+      }
+
+      const newAudio = document.getElementById(id);
+
+      // If the same button is clicked, toggle play/pause
+      if (currentAudio === newAudio) {
+        if (newAudio.paused) {
+          newAudio.play();
+        } else {
+          newAudio.pause();
+        }
+        return;
+      }
+
+      // Pause current audio without resetting time
+      if (currentAudio) {
+        currentAudio.pause();
+      }
+
+      // Play new audio and set as current
+      currentAudio = newAudio;
+      newAudio.play();
+    }
+  </script>
+</body>
+</html>
